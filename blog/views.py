@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import Person
 from .forms import PersonForm
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 # Create your views here.
 
 def hellofunc(request):
@@ -60,3 +62,31 @@ def delete_person(reqest,pk):
     person=get_object_or_404(Person,pk=pk)
     person.delete()
     return redirect('people_list')
+
+
+
+def register_user(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        # UserCreationForm is a django inbuilt function that helps us create new users.
+            # initializes the form with the submitted data
+        if form.is_valid():
+            user=form.save()
+            # saves the user to the database
+            login(request,user)
+            # after successful registration login
+            messages.success(request,"Registration Successful!")
+            return redirect('dashboard')
+        else:
+            messages.error(request,"Registration Failed!")
+    else:
+        form=UserCreationForm()
+        # if the request is post we give empty form to fill data
+        return render(request,'blog/register.html',{'form':form,'title':"Register"})
+
+
+def dashboard(request):
+    if request.user.is_authenticated:
+        return HttpResponse(f"Welcome {request.user.username}!")
+    else:
+        return HttpResponse("You're not logged in")
