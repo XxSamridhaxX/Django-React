@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{title}}</title>
 </head>
 <body>
+    
     <form method="post">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit">Add person</button>
+        <button type="submit">{{button_name}}</button>
+        <a href="{% url 'people_list' %}">Cancel</a>
     </form>
 </body>
 </html>

@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse
 from .models import Person
 from .forms import PersonForm
+from django.contrib import messages
 # Create your views here.
 
 def hellofunc(request):
@@ -25,11 +26,14 @@ def add_person(request):
             # is the datatype right
             # are there any validation rules broken
             form.save()
+            messages.success(request,"Person added successfully!")
             # save data into database
             return redirect('people_list')
     else:
             form=PersonForm()
-    return render(request, 'blog/add_person.html', {'form': form})
+    return render(request, 'blog/add_person.html', {'form':form,
+                                                  'title':'Add Person',
+                                                  'button_name':'ADD PERSON'})
 
 
 def edit_person(request,pk):
@@ -40,6 +44,7 @@ def edit_person(request,pk):
         form = PersonForm(request.POST,instance=person)
         if form.is_valid():
             form.save()
+            messages.success(request,"Saved Changes Successfully!")
             return redirect('people_list')
         
     else: 
@@ -47,7 +52,9 @@ def edit_person(request,pk):
         # PersonForm creates a FormObject
         # 🔸 instance=person — pre-fills the form with existing data.
 
-    return render(request,'blog/edit_person.html',{'form':form})
+    return render(request,'blog/add_person.html',{'form':form,
+                                                  'title':'Edit Person',
+                                                  'button_name':'Save Changes'})
 
 def delete_person(reqest,pk):
     person=get_object_or_404(Person,pk=pk)
