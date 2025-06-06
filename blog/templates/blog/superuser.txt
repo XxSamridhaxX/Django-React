@@ -1,0 +1,3 @@
+username: abced1234
+email: abced1234@gmail.com
+password: abcd1234

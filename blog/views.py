@@ -5,6 +5,7 @@ from .forms import PersonForm
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def hellofunc(request):
@@ -58,7 +59,7 @@ def edit_person(request,pk):
                                                   'title':'Edit Person',
                                                   'button_name':'Save Changes'})
 
-def delete_person(reqest,pk):
+def delete_person(request,pk):
     person=get_object_or_404(Person,pk=pk)
     person.delete()
     return redirect('people_list')
@@ -82,10 +83,11 @@ def register_user(request):
     else:
         form=UserCreationForm()
         # if the request is post we give empty form to fill data
-        return render(request,'blog/register.html',{'form':form,'title':"Register"})
+    return render(request,'blog/register.html',{'form':form,'title':"Register"})
 
-
-def dashboard(request):
+@login_required
+# This is login decorators only lets logged-in users see dashboard else redirects to login page
+def dashboard_view(request):
     if request.user.is_authenticated:
         return HttpResponse(f"Welcome {request.user.username}!")
     else:

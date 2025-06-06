@@ -8,4 +8,5 @@ urlpatterns = [
     path('editPerson/<int:pk>',views.edit_person,name="edit_person"),
     path('deletePerson/<int:pk>',views.delete_person,name="delete_person"),
     path('register/',views.register_user,name="register_user"),
+    path('dashboard/',views.dashboard_view,name="dashboard"),
 ]
