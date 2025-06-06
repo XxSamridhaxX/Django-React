@@ -1,3 +1,8 @@
-username: abced1234
-email: abced1234@gmail.com
+username: abcd1234
+email: abcd1234@gmail.com
 password: abcd1234
+
+
+
+after putting LOGIN.as_view() we should also put LOGOUT_REDIRECT_URL = 'login' in settings.py
+that tells django about where to redirect after successful login.

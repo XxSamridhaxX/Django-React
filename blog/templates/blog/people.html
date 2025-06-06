@@ -16,16 +16,20 @@
     
     <table border=1px>
         <tr><th>name</th>
+        <th>phone_number</th>
+        <th>email</th>
         <th>age</th></tr> 
+        <h1>Contact Registery for: {{request.user}}</h1>
         {% for person in peoples %}
             <tr>
                 <td>{{person.name}}</td>
+                <td>{{person.phone_number}}</td>
+                <td>{{person.email}}</td>
                 <td>{{person.age}}</td>
+
                 <td><a href="{% url 'edit_person' person.id %}" style="background-color: green;">Edit</a></td>
                 <td><a href="{% url 'delete_person' person.id %}" onclick="return confirm('Are you sure you want to delete?')" style="background-color: red;">Delete</a></td>
             </tr>
-            {% empty %}
-                <h2>No table in the database</h2>
             {% endfor %}
             <a href="{% url 'add_person' %}">Click To Add Person</a>
     </table>

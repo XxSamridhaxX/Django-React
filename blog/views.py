@@ -15,11 +15,12 @@ def hellofunc(request):
     }
     return render(request,'blog/hello.html',context)
 
+@login_required
 def people_list(request):
-    peoples= Person.objects.all()
+    peoples= Person.objects.filter(user=request.user)
     return render(request,'blog/people.html',{'peoples':peoples})
 
-
+@login_required
 def add_person(request):
     if request.method=="POST":
         form= PersonForm(request.POST)
@@ -28,7 +29,10 @@ def add_person(request):
             # form is valid like fields are filled
             # is the datatype right
             # are there any validation rules broken
-            form.save()
+            person=form.save(commit=False)
+            # form.save() le model ko instace banaucha
+            person.user=request.user
+            person.save()
             messages.success(request,"Person added successfully!")
             # save data into database
             return redirect('people_list')
@@ -38,9 +42,9 @@ def add_person(request):
                                                   'title':'Add Person',
                                                   'button_name':'ADD PERSON'})
 
-
+@login_required
 def edit_person(request,pk):
-    person= get_object_or_404(Person,pk=pk)
+    person= get_object_or_404(Person,pk=pk,user=request.user)
     if request.method=='POST':
            # 🔹 If the form was submitted (POST), create a form object
         # 🔸 We pass both the submitted data and the existing object (to update it instead of creating a new one)
@@ -60,7 +64,7 @@ def edit_person(request,pk):
                                                   'button_name':'Save Changes'})
 
 def delete_person(request,pk):
-    person=get_object_or_404(Person,pk=pk)
+    person=get_object_or_404(Person,pk=pk,user=request.user)
     person.delete()
     return redirect('people_list')
 
@@ -88,7 +92,4 @@ def register_user(request):
 @login_required
 # This is login decorators only lets logged-in users see dashboard else redirects to login page
 def dashboard_view(request):
-    if request.user.is_authenticated:
-        return HttpResponse(f"Welcome {request.user.username}!")
-    else:
-        return HttpResponse("You're not logged in")
+        return render(request,"blog/dashboard.html")
