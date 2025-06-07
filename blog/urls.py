@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView,LogoutView
 
 
 
-from .views import persion_api_list
+from .views import person_api_list,person_details
 
 
 
@@ -27,5 +27,6 @@ urlpatterns = [
 
 
     # Api views
-    path('api/people/',persion_api_list,name='api_people'),
+    path('api/people/',person_api_list,name='api_people'),
+    path('api/people/<int:pk>/',person_details,name='api_people'),
 ]

@@ -117,7 +117,7 @@ def dashboard_view(request):
 # get request bhaneko front end ma data chaiyo bhane ya bata serialize garera data pathaucha of a particular user ko information registry.
 @permission_classes([IsAuthenticated])
 # Person Authenticated cha bhane matra garna dincha
-def persion_api_list(request):
+def person_api_list(request):
     if request.method== "GET":
         persons=Person.objects.filter(user=request.user)
         serializer = PersonSerializer(persons,many=True)
@@ -129,4 +129,32 @@ def persion_api_list(request):
             serializer.save(user=request.user)
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+
+@api_view(["GET","PUT","DELETE"])
+@permission_classes([IsAuthenticated])    
+def person_details(request,pk):
+    try:
+        person= get_object_or_404(Person,user=request.user,pk=pk)
+       
+    except Person.DoesNotExist:
+        return Response({'error':'Person not found'},status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method=="GET":
+        serializer=PersonSerializer(person)
+        return Response(serializer.data)
+    
+    elif request.method== "PUT":
+        # Client JSON → DRF View → Serializer Validation → Database Update → JSON Response
+        serializer=PersonSerializer(person,data=request.data)
+         # The existing Person instance and the new data from the request are passed to the serializer.
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    elif request.method== "DELETE":
+        person.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
    
