@@ -31,7 +31,15 @@
                 <td><a href="{% url 'delete_person' person.id %}" onclick="return confirm('Are you sure you want to delete?')" style="background-color: red;">Delete</a></td>
             </tr>
             {% endfor %}
+            <!-- logout button -->
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">logout</button>
+            </form>
+<br><br>
             <a href="{% url 'add_person' %}">Click To Add Person</a>
+            <br><br>
+            
     </table>
 </body>
 </html>

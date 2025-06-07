@@ -8,6 +8,16 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+
+
+
+# TODO: Serializers imports
+from rest_framework.decorators import api_view,permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from .serializers import PersonSerializer
+
+
 def hellofunc(request):
     context= {
         'name': 'John',
@@ -81,7 +91,7 @@ def register_user(request):
             login(request,user)
             # after successful registration login
             messages.success(request,"Registration Successful!")
-            return redirect('dashboard')
+            return redirect('people_list')
         else:
             messages.error(request,"Registration Failed!")
     else:
@@ -92,4 +102,22 @@ def register_user(request):
 @login_required
 # This is login decorators only lets logged-in users see dashboard else redirects to login page
 def dashboard_view(request):
-        return render(request,"blog/dashboard.html")
+        return redirect('people_list')
+
+
+
+
+
+
+
+# TODO: Serializers view
+
+@api_view(['GET'])
+# get request bhaneko front end ma data chaiyo bhane ya bata serialize garera data pathaucha of a particular user ko information registry.
+@permission_classes([IsAuthenticated])
+# Person Authenticated cha bhane matra garna dincha
+def persion_api_list(request):
+    persons=Person.objects.filter(user=request.user)
+    serializer = PersonSerializer(persons,many=True)
+    # many=true means works only when there are more than one data.
+    return Response(serializer.data)

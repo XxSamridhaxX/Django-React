@@ -2,6 +2,12 @@ from django.urls import path
 from . import views
 from django.contrib.auth.views import LoginView,LogoutView
 
+
+
+from .views import persion_api_list
+
+
+
 urlpatterns = [
     path('hello/',views.hellofunc,name='hello'),
     path('people/',views.people_list,name='people_list'),
@@ -18,4 +24,8 @@ urlpatterns = [
     # template name expects html page
     path("logout/",LogoutView.as_view(next_page="register_user"),name="logout"),
     # while next_page expects a name of path to follow when you press logout
+
+
+    # Api views
+    path('api/people/',persion_api_list,name='api_people'),
 ]
