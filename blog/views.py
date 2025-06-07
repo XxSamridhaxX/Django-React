@@ -16,6 +16,7 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .serializers import PersonSerializer
+from rest_framework import status
 
 
 def hellofunc(request):
@@ -112,12 +113,20 @@ def dashboard_view(request):
 
 # TODO: Serializers view
 
-@api_view(['GET'])
+@api_view(['GET','POST'])
 # get request bhaneko front end ma data chaiyo bhane ya bata serialize garera data pathaucha of a particular user ko information registry.
 @permission_classes([IsAuthenticated])
 # Person Authenticated cha bhane matra garna dincha
 def persion_api_list(request):
-    persons=Person.objects.filter(user=request.user)
-    serializer = PersonSerializer(persons,many=True)
-    # many=true means works only when there are more than one data.
-    return Response(serializer.data)
+    if request.method== "GET":
+        persons=Person.objects.filter(user=request.user)
+        serializer = PersonSerializer(persons,many=True)
+        # many=true means works only when there are more than one   data.
+        return Response(serializer.data) 
+    elif request.method=="POST":
+        serializer=PersonSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+   

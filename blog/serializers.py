@@ -8,6 +8,6 @@ from .models import Person
 class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
-        fields = ["id",'name','email','phone_number']
+        fields = ["id",'name','age','email','phone_number']
         # fields= '__all__'
         # Person model lai serialize garcha all the fields lai
