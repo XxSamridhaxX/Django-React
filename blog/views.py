@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse
-from .models import Person
+from .models import Person,User
 from .forms import PersonForm
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
@@ -120,6 +120,11 @@ def dashboard_view(request):
 def person_api_list(request):
     if request.method== "GET":
         persons=Person.objects.filter(user=request.user)
+
+        # TODO: only to test get post using postman(
+        # persons=Person.objects.all()
+        # )
+
         serializer = PersonSerializer(persons,many=True)
         # many=true means works only when there are more than one   data.
         return Response(serializer.data) 
@@ -127,6 +132,12 @@ def person_api_list(request):
         serializer=PersonSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user)
+
+            # TODO: only to test get post using postman(
+            # dummy_user= User.objects.get(username="abcd1234")
+            # serializer.save(user=dummy_user)
+            # )
+
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     

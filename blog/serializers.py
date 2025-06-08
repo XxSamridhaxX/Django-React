@@ -10,4 +10,4 @@ class PersonSerializer(serializers.ModelSerializer):
         model = Person
         fields = ['name','age','email','phone_number']
         # fields= '__all__'
-        # Person model lai serialize garcha all the fields lai
+        # Person model lai serialize garcha all the fields lai 
