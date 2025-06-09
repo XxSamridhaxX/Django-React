@@ -126,7 +126,7 @@ def person_api_list(request):
         # )
 
         serializer = PersonSerializer(persons,many=True)
-        # many=true means works only when there are more than one   data.
+        # many=true means works only when there are more than one data.
         return Response(serializer.data) 
     elif request.method=="POST":
         serializer=PersonSerializer(data=request.data)
