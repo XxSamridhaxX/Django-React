@@ -21,3 +21,24 @@ This setup allows users to manage their own directory of contacts while ensuring
 
 
 day5:(6/9/2025) starting authtication token
+add rest_framework and rest_framework.authtoken in installed app in settings.py
+added this at the bottom of settings.py to enable token REST_FRAMEWORK = {
+
+using postman for get first get token for corresponding user
+then for get request use 
+Authorization: Token 123dc54b17bc2122496e222130abcaf8248b18db
+
+so till now we did manual getting of tokens right but how to make it automatic? Next this is our task
+Today we'll do 3 things 
+1: Automatically generate token 
+2. create a login api view 
+3. test token auth api with postman
+
+2. create a login api view 
+we create a token when we create a user first time but each time he logs in we are only interested in the users token so in order to implelemnt this we get this view function
+
+aaba hamle euta custom_login() bhanne euta function banaunu parcha kinaki yo euta api ko end point huncha for login purpose ko lai like from end(react)
+bata hamle login garna khojda simply login form use garera matra naya user banauna hudaina login form bhaneko session ko lai matra beneficiary huncha 
+tra user lai ta hamle securely login garaunu parcha tesai le hamle token system use garcham harek time user le login garcha hamle tesko token regenerate(same token) dinu parcha.
+HOW it works is that first time register garda token generate garera user lai dincha. user ko local db or browser ma store huncha
+so arko choti login garda pheri pw dinu pardeina tei token le login garna milcha plus token compromize bhaye ni pw compromise hudeina so arko time tei token le use garcham

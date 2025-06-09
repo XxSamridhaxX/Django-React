@@ -29,4 +29,8 @@ urlpatterns = [
     # Api views
     path('api/people/',person_api_list,name='api_people'),
     path('api/people/<int:pk>/',person_details,name='api_people'),
+
+    # a path for custom login
+    path('api/login',views.custom_login,name="custom_login")
+    
 ]

@@ -4,8 +4,11 @@ from .models import Person,User
 from .forms import PersonForm
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
+
+
+from rest_framework.authtoken.models import Token
 # Create your views here.
 
 
@@ -20,6 +23,7 @@ from rest_framework import status
 
 
 def hellofunc(request):
+    # context is a dictionary we can only pass dictionary as a return 
     context= {
         'name': 'John',
         'age': 30,
@@ -89,9 +93,11 @@ def register_user(request):
         if form.is_valid():
             user=form.save()
             # saves the user to the database
+            token,created= Token.objects.get_or_create()
             login(request,user)
             # after successful registration login
             messages.success(request,"Registration Successful!")
+            # print("Token for user:",token.key)
             return redirect('people_list')
         else:
             messages.error(request,"Registration Failed!")
@@ -145,17 +151,13 @@ def person_api_list(request):
 @api_view(["GET","PUT","DELETE"])
 @permission_classes([IsAuthenticated])    
 def person_details(request,pk):
-    try:
-        person= get_object_or_404(Person,user=request.user,pk=pk)
-       
-    except Person.DoesNotExist:
-        return Response({'error':'Person not found'},status=status.HTTP_404_NOT_FOUND)
+    person= get_object_or_404(Person,user=request.user,pk=pk)
     
     if request.method=="GET":
         serializer=PersonSerializer(person)
         return Response(serializer.data)
     
-    elif request.method== "PUT":
+    elif request.method== "PUT":    # Update the person data
         # Client JSON → DRF View → Serializer Validation → Database Update → JSON Response
         serializer=PersonSerializer(person,data=request.data)
          # The existing Person instance and the new data from the request are passed to the serializer.
@@ -168,4 +170,19 @@ def person_details(request,pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-   
+@api_view(['POST'])
+def custom_login(request):
+    username=request.data.get('username')
+    password=request.data.get('password')
+
+    user=authenticate(username=username,password=password)
+    # authenticate function le username ra pw lera db ma check garera authenticate garcha if user exist then theyo user object firta pathaucha else None firta pathaucha
+    if user is not None:
+    # matlab user exist garcha gare bhane hamle token generate garnu paryo tesko lai so authenticate huna sakcha
+        token,created= Token.objects.get_or_create(user=user)
+        return Response({
+            "token":token.key,
+            "username":username
+        })
+    else:
+        return Response({"error":"Invalid credentials"},status=status.HTTP_401_UNAUTHORIZED)
