@@ -186,3 +186,11 @@ def custom_login(request):
         })
     else:
         return Response({"error":"Invalid credentials"},status=status.HTTP_401_UNAUTHORIZED)
+    
+# forLogOut
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def custom_logout(request):
+    # Delete the curent user's token to logout them
+    request.user.auth_token.delete()
+    return Response({'message':"Logged out successfully"},status=status.HTTP_200_OK)

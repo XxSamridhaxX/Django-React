@@ -31,6 +31,7 @@ urlpatterns = [
     path('api/people/<int:pk>/',person_details,name='api_people'),
 
     # a path for custom login
-    path('api/login',views.custom_login,name="custom_login")
+    path('api/login',views.custom_login,name="custom_login"),
+    path('api/logout',views.custom_logout,name="custom_logout"),
     
 ]

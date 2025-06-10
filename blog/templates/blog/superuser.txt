@@ -42,3 +42,6 @@ bata hamle login garna khojda simply login form use garera matra naya user banau
 tra user lai ta hamle securely login garaunu parcha tesai le hamle token system use garcham harek time user le login garcha hamle tesko token regenerate(same token) dinu parcha.
 HOW it works is that first time register garda token generate garera user lai dincha. user ko local db or browser ma store huncha
 so arko choti login garda pheri pw dinu pardeina tei token le login garna milcha plus token compromize bhaye ni pw compromise hudeina so arko time tei token le use garcham
+
+
+6/10/2025 (maybe day 6) due to power outage and went out khasai kei garna payena react start gariyo ali ali heriyo
