@@ -45,3 +45,23 @@ so arko choti login garda pheri pw dinu pardeina tei token le login garna milcha
 
 
 6/10/2025 (maybe day 6) due to power outage and went out khasai kei garna payena react start gariyo ali ali heriyo
+
+6/11/2025
+Today I got to learnt about axios
+So what is Axios? 
+Axios is a react library which is used as HTTP client to send request like POST, GET, PUT http requests which helps to communicate with the server.
+Also, Get data (like fetching user info from an API),Send data (like submitting a form),Delete or update data on a server
+so why not use traditional fetch()?
+The reason is that Axios provides better structure, error handling, Automatic Json Parsing etc
+
+1st: User Authentication & Token Storage
+
+learnt about promises,async and wait prior to doing this
+
+| Step | Topic                                                              |
+| ---- | ------------------------------------------------------------------ |
+| ✅ 1  | Build a React login form (`Login.jsx`)                             |
+| ✅ 2  | Send login data to Django, get the token                           |
+| ✅ 3  | Store token in `localStorage`                                      |
+| ✅ 4  | Use token in future POST/GET requests (auth header)                |
+| ⏭️ 5 | After that, build the full `PersonForm` using the stored user info |
