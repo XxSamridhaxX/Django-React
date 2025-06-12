@@ -41,9 +41,17 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'rest_framework.authtoken',
+
+
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    # To resolve cors error
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -135,3 +143,8 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAuthenticated',
     # ], this enforces permission globally
 }
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+CORS_ALLOW_CREDENTIALS = True #For enable credentials
+# CORS_ORIGIN_ALLOW_ALL = True

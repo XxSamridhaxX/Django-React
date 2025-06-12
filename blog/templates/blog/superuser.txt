@@ -65,3 +65,25 @@ learnt about promises,async and wait prior to doing this
 | ✅ 3  | Store token in `localStorage`                                      |
 | ✅ 4  | Use token in future POST/GET requests (auth header)                |
 | ⏭️ 5 | After that, build the full `PersonForm` using the stored user info |
+
+
+Hamle backend ma data ta pathayeu form bata but euta problem aajha pani aucha CORS error bhanne 
+CORS(CROSS Origin Resource Sharing) bhaneko component(middleware) ho which is required when web application running on one domain
+tries to access the resource from a different domain
+CORS are protocol to integrate applications
+
+so we need to allow CORS so that front end can use your api
+TO INSTALL DJANGO CORS:
+1) pip install django-cors-headers
+2) put it in installed app
+3) add these to middlewarecorsheaders.middleware.CorsMiddleware',
+       'django.middleware.common.CommonMiddleware',
+       yo middleware maddhe ko sab bhanda top ma hunu parcha 
+4) CORS_ORIGIN_ALLOW_ALL = True put this at the bottom of settings.py 
+if you want to only allow specific origins then
+CORS_ORIGIN_WHITELIST = [
+         'http://localhost:3000',  # Your React app's URL
+         'http://127.0.0.1:3000',
+         # Add other allowed origins
+     ] 
+5)CORS_ALLOW_CREDENTIALS = True means credentials exchange garna milcha bhancha
