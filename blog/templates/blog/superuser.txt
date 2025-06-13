@@ -87,3 +87,19 @@ CORS_ORIGIN_WHITELIST = [
          # Add other allowed origins
      ] 
 5)CORS_ALLOW_CREDENTIALS = True means credentials exchange garna milcha bhancha
+
+
+6/13/2025
+Today I'm gonna learn about react router.
+(written in copy)
+Also learned about Link and useNavigation(hook)
+created navbar
+learned about privateRoute
+peoplepage that displays all the people
+create person form that will be used to insert people into the db into the specific user we use get request using axios with body as the data and headers that has authentication information 
+plus
+I've learned to get specific data using jsx component PersonDetail.jsx
+it uses new hook by the way but dont get freaked out its easy to learn
+we define dynamic path in get person like 'person/:id' where id is dynamic
+so useParams just extracts the id thats after:
+and in the path of axios we write ${id} at last and that's all the concept I need to know
