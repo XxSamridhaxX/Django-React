@@ -103,3 +103,8 @@ it uses new hook by the way but dont get freaked out its easy to learn
 we define dynamic path in get person like 'person/:id' where id is dynamic
 so useParams just extracts the id thats after:
 and in the path of axios we write ${id} at last and that's all the concept I need to know
+1
+2
+3
+4
+5

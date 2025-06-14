@@ -94,6 +94,7 @@ def register_user(request):
             user=form.save()
             # saves the user to the database
             token,created= Token.objects.get_or_create()
+            # Create a token for new user and store it in db
             login(request,user)
             # after successful registration login
             messages.success(request,"Registration Successful!")
@@ -152,7 +153,6 @@ def person_api_list(request):
 @permission_classes([IsAuthenticated])    
 def person_details(request,pk):
     person= get_object_or_404(Person,user=request.user,pk=pk)
-    
     if request.method=="GET":
         serializer=PersonSerializer(person)
         return Response(serializer.data)
